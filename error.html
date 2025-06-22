@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Screenshot Not Allowed</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #ffffff;
+      overflow-x: hidden;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 1.5rem;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08);
+      padding: 2.5rem;
+      max-width: 600px;
+      width: 100%;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    .glow-icon {
+      animation: pulse 2s infinite;
+    }
+
+    .title {
+      color: #e11d48;
+      font-weight: 800;
+      font-size: 2rem;
+    }
+
+    .info-box {
+      background: rgba(14, 165, 233, 0.08);
+      border: 1px solid rgba(14, 165, 233, 0.15);
+      border-radius: 1rem;
+      padding: 1.5rem;
+    }
+
+    .btn {
+      background: linear-gradient(to right, #0ea5e9, #38bdf8);
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border-radius: 9999px;
+      font-weight: 600;
+      font-size: 0.875rem;
+      box-shadow: 0 4px 14px rgba(14, 165, 233, 0.4);
+      transition: all 0.3s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px) scale(1.03);
+      box-shadow: 0 6px 20px rgba(14, 165, 233, 0.6);
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+      50% {
+        transform: scale(1.05);
+        opacity: 0.8;
+      }
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .iphone-dash {
+      position: fixed;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 130px;
+      height: 5px;
+      background: #cbd5e1;
+      border-radius: 100px;
+      opacity: 0.85;
+      z-index: 50;
+    }
+
+    @media (max-width: 640px) {
+      .card {
+        padding: 1.5rem;
+        border-radius: 1rem;
+      }
+
+      .btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body class="flex items-center justify-center px-4 py-10 sm:py-16">
+
+  <div class="card text-center text-gray-800">
+    <div class="mb-6">
+      <svg class="mx-auto h-20 w-20 text-red-500 glow-icon" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3m0 4h.01M21 12A9 9 0 113 12a9 9 0 0118 0z" />
+      </svg>
+    </div>
+
+    <h1 class="title mb-4">Screenshot Blocked</h1>
+    <p class="text-sm text-gray-600 mb-6 leading-relaxed">
+      Screenshots are disabled on this page to protect your sensitive gift card information. Please use the options below to securely share.
+    </p>
+
+    <div class="info-box mb-6">
+      <p class="text-base font-semibold text-blue-700 mb-4">Want to share your gift card securely?</p>
+      <div class="flex flex-col sm:flex-row justify-center gap-4">
+        <button onclick="copyQR()" class="btn">📋 Copy Link</button>
+        <button onclick="shareQR()" class="btn">📤 Share Securely</button>
+      </div>
+    </div>
+
+    <p class="text-xs text-gray-400 italic">Your security is our priority. Thank you for understanding.</p>
+  </div>
+
+  <!-- iPhone bottom dash -->
+  <div class="iphone-dash"></div>
+
+  <script>
+    const qrLink = "https://yourdomain.com/giftcard-qr-link"; // Replace with real link
+
+    function copyQR() {
+      navigator.clipboard.writeText(qrLink).then(() => {
+        alert("✅ Gift card link copied to clipboard!");
+      }).catch(() => {
+        alert("❌ Failed to copy. Please try again.");
+      });
+    }
+
+    function shareQR() {
+      if (navigator.share) {
+        navigator.share({
+          title: 'Gift Card',
+          text: 'Here’s your secure gift card link:',
+          url: qrLink
+        }).catch(() => {
+          alert("❌ Could not share. You can copy the link instead.");
+        });
+      } else {
+        copyQR(); // fallback
+      }
+    }
+  </script>
+
+</body>
+</html>
